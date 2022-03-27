@@ -1,8 +1,5 @@
 import tools.Rand;
 
-import javax.swing.*;
-import java.util.Scanner;
-
 public class BattleField {
     private Cell[][] field;
     private int width;
