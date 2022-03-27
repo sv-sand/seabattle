@@ -19,9 +19,7 @@ public class Ship {
         return size == hitCount;
     }
 
-    //
     // Getters & setters
-    //
 
     public String getName() {
         return name;
