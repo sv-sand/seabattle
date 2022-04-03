@@ -1,10 +1,18 @@
+import model.DataBase;
+
 import java.util.Scanner;
 
 public class SeaBattle {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
 
+        DataBase db = new DataBase();
+        db.Connect();
+        db.InitializeDataBase();
+        db.Disconnect();
+
+
+        /*
         System.out.println("Welcome to The Sea battle game.");
         System.out.println("For exit write 'exit'\n");
         System.out.println("To see the map write 'map'\n");
@@ -14,15 +22,14 @@ public class SeaBattle {
         battleField.setShips(5, 5);
 
         startGame(battleField);
-
-        System.out.println("Press Enter...");
-        scanner.nextLine();
+        endGame();
+        */
     }
 
     private static void startGame(BattleField battleField) {
         System.out.println("The game has started");
 
-        Boolean showShips = false;
+        boolean showShips = false;
         Scanner scanner = new Scanner(System.in);
         while(battleField.hasShips()) {
             battleField.printField(showShips);
@@ -63,5 +70,13 @@ public class SeaBattle {
 
         System.out.println("Congratulations! You win!");
     }
+
+    private static void endGame() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Press Enter...");
+        scanner.nextLine();
+    }
+
 
 }

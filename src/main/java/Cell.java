@@ -1,12 +1,12 @@
 public class Cell {
-    private String name;
-    private int x;
-    private int y;
-    private Boolean hit = false;
-    private Boolean partOfShip = false;
+    private final String name;
+    private final int x;
+    private final int y;
+    private boolean hit = false;
+    private boolean partOfShip = false;
     private Ship ship;
 
-    Cell(int x, int y) {
+    public Cell(int x, int y) {
         this.x = x;
         this.y = y;
         this.name = getCellName(x+1, y+1);
@@ -14,7 +14,7 @@ public class Cell {
 
     // Interface
 
-    public Boolean Hit(){
+    public boolean Hit(){
         hit = true;
         if(partOfShip) {
             ship.Hit();
@@ -37,7 +37,7 @@ public class Cell {
         return ship;
     }
 
-    public Boolean setShip(Ship ship) {
+    public boolean setShip(Ship ship) {
         if(partOfShip)
             return false;
 
@@ -47,11 +47,11 @@ public class Cell {
         return true;
     }
 
-    public Boolean isHit() {
+    public boolean isHit() {
         return hit;
     }
 
-    public Boolean isPartOfShip() {
+    public boolean isPartOfShip() {
         return partOfShip;
     }
 

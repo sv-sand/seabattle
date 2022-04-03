@@ -1,12 +1,11 @@
 import tools.Rand;
 
 public class BattleField {
-    private Cell[][] field;
-    private int width;
-    private int height;
-    private int shipCellsCount=0;
+    private final Cell[][] field;
+    private final int width;
+    private final int height;
 
-    BattleField(int width, int height) {
+    public BattleField(int width, int height) {
         this.width = width;
         this.height = height;
 
@@ -27,7 +26,7 @@ public class BattleField {
         return null;
     }
 
-    public void printField(Boolean showShips) {
+    public void printField(boolean showShips) {
 
         // Print X-axis
         System.out.print("  ");
@@ -83,7 +82,7 @@ public class BattleField {
         int errCount=0;
 
         while(shipNumber <= count) {
-            Boolean isVertical = Rand.getBool();
+            boolean isVertical = Rand.getBool();
             int size = Rand.getInt(1, maxSize) ;
             Ship ship = new Ship(String.valueOf(shipNumber), size);
 
@@ -99,11 +98,10 @@ public class BattleField {
 
             errCount = 0;
             shipNumber++;
-            shipCellsCount += size;
         }
     }
 
-    public Boolean hasShips() {
+    public boolean hasShips() {
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++) {
                 Cell cell = field[x][y];
@@ -115,18 +113,18 @@ public class BattleField {
 
     // Inner methods
 
-    private Boolean setShip(Boolean isVertical, Ship ship, int size) {
+    private boolean setShip(boolean isVertical, Ship ship, int size) {
         if(isVertical)
             return setVerticalShip(ship, size);
         else
             return setHorizontalShip(ship, size);
     }
 
-    private Boolean setVerticalShip(Ship ship, int size) {
+    private boolean setVerticalShip(Ship ship, int size) {
         int x = Rand.getInt(0, width - 1);
         int y = Rand.getInt(0, height - size - 1);
 
-        // Select cells
+        // Select set of cells
         Cell[] cells = new Cell[size];
         for(int cellNumber=0; cellNumber<size; cellNumber++)
             cells[cellNumber] = field[x][y+cellNumber];
@@ -143,7 +141,7 @@ public class BattleField {
         return true;
     }
 
-    private Boolean setHorizontalShip(Ship ship, int size) {
+    private boolean setHorizontalShip(Ship ship, int size) {
         int x = Rand.getInt(0, width - size - 1);
         int y = Rand.getInt(0, height - 1);
 

@@ -1,9 +1,9 @@
 public class Ship {
-    private String name;
-    private int size;
+    private final String name;
+    private final int size;
     private int hitCount = 0;
 
-    Ship(String name, int size) {
+    public Ship(String name, int size) {
         this.name = name;
         this.size = size;
     }
@@ -15,7 +15,7 @@ public class Ship {
             hitCount++;
     }
 
-    public Boolean isDestroy() {
+    public boolean isDestroy() {
         return size == hitCount;
     }
 
