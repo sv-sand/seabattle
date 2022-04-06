@@ -1,11 +1,9 @@
-# InteleiJ Idea files
+# InteleiJ Idea & Maven files
 .idea
 *.iml
-out
-db
-
-# Maven files
-target
+/out/
+/db/
+/target/
 
 # Compiled class file
 *.class
