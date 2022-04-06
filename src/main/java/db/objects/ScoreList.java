@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserList extends DBObjectList {
+public class ScoreList extends DBObjectList {
     public static List<Score> getTop5List(DataBase db) {
         List<Score> list = new ArrayList<>();
 

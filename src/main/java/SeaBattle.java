@@ -1,17 +1,11 @@
-import db.DBObject;
 import db.objects.Score;
-import db.objects.UserList;
+import db.objects.ScoreList;
 import game.BattleField;
 import game.Cell;
 import game.Ship;
 import db.DataBase;
 import db.objects.User;
 
-import javax.xml.crypto.Data;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -112,7 +106,7 @@ public class SeaBattle {
     }
 
     private static void ShowScoreRating(DataBase db) {
-        List<Score> list = UserList.getTop5List(db);
+        List<Score> list = ScoreList.getTop5List(db);
         SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 
         System.out.println("Top 5 scores list:");
