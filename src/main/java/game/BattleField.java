@@ -1,3 +1,5 @@
+package game;
+
 import tools.Rand;
 
 public class BattleField {
@@ -109,6 +111,17 @@ public class BattleField {
                     return true;
             }
         return false;
+    }
+
+    public int getNoHitCells() {
+        int result=0;
+
+        for (Cell[] col: field)
+            for (Cell cell: col)
+                if (!cell.isHit() & !cell.isPartOfShip())
+                    result++;
+
+        return result;
     }
 
     // Inner methods

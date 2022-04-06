@@ -1,29 +1,43 @@
-import model.DataBase;
+import db.DBObject;
+import db.objects.Score;
+import db.objects.UserList;
+import game.BattleField;
+import game.Cell;
+import game.Ship;
+import db.DataBase;
+import db.objects.User;
 
-import java.util.Scanner;
+import javax.xml.crypto.Data;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
+import static java.lang.Math.min;
 
 public class SeaBattle {
 
     public static void main(String[] args) {
 
-        DataBase db = new DataBase();
-        db.Connect();
-        db.InitializeDataBase();
-        db.Disconnect();
-
-
-        /*
         System.out.println("Welcome to The Sea battle game.");
-        System.out.println("For exit write 'exit'\n");
-        System.out.println("To see the map write 'map'\n");
+        System.out.println("For exit write 'exit'");
+        System.out.println("To see the map write 'map'");
 
-        BattleField battleField;
-        battleField = new BattleField(9, 9);
+        game.BattleField battleField;
+        battleField = new game.BattleField(9, 9);
         battleField.setShips(5, 5);
 
         startGame(battleField);
+
+        DataBase db = new DataBase();
+        db.Connect();
+        AddScore(db, battleField.getNoHitCells());
+        ShowScoreRating(db);
+        db.Disconnect();
+
         endGame();
-        */
     }
 
     private static void startGame(BattleField battleField) {
@@ -78,5 +92,58 @@ public class SeaBattle {
         scanner.nextLine();
     }
 
+    private static void AddScore(DataBase db, int scoreCount){
+        Scanner scanner = new Scanner(System.in);
 
+        System.out.print("Enter your name: ");
+        String name = scanner.nextLine();
+
+        // Create user
+        User user = new User(db);
+        user.name = name;
+        user.Create();
+
+        // Create score
+        Score score = new Score(db);
+        score.user = user;
+        score.date = new Date();
+        score.scoreCount = scoreCount;
+        score.Create();
+    }
+
+    private static void ShowScoreRating(DataBase db) {
+        List<Score> list = UserList.getTop5List(db);
+        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+
+        System.out.println("Top 5 scores list:");
+        System.out.println(" -----------------------------------------------");
+        System.out.println("| PLACE | NAME            | SCORE  | DATE       |");
+
+        for (Score score: list) {
+            String place = String.valueOf(list.indexOf(score) + 1);
+            String name = score.user.name;
+            String scoreCount = String.valueOf(score.scoreCount);
+            String date = df.format(score.date);
+
+            place = FormatString(place, 5);
+            name = FormatString(name, 15);
+            scoreCount = FormatString(scoreCount, 6);
+            date = FormatString(date, 10);
+
+            System.out.printf("| %s | %s | %s | %s |\n", place, name, scoreCount, date);
+        }
+
+        System.out.println(" -----------------------------------------------");
+    }
+
+    private static String FormatString(String str, int length) {
+        String result;
+        result = str.substring(0, min(length, str.length()));
+
+        // Add padding
+        while(result.length()<length)
+            result += " ";
+
+        return result;
+    }
 }

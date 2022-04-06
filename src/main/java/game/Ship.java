@@ -1,3 +1,5 @@
+package game;
+
 public class Ship {
     private final String name;
     private final int size;
