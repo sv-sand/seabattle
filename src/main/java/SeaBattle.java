@@ -5,6 +5,7 @@ import game.Cell;
 import game.Ship;
 import db.DataBase;
 import db.objects.User;
+import tools.Tools;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -24,13 +25,7 @@ public class SeaBattle {
         battleField.setShips(5, 5);
 
         startGame(battleField);
-
-        DataBase db = new DataBase();
-        db.Connect();
-        AddScore(db, battleField.getNoHitCells());
-        ShowScoreRating(db);
-        db.Disconnect();
-
+        AddNewScore(battleField);
         endGame();
     }
 
@@ -86,27 +81,41 @@ public class SeaBattle {
         scanner.nextLine();
     }
 
-    private static void AddScore(DataBase db, int scoreCount){
+    private static void AddNewScore(BattleField battleField) {
+        DataBase db = new DataBase();
+        db.Connect();
+
+        String name = AskUserName();
+        AddScore(db, name, battleField.getNoHitCells());
+        ShowScoreRating(db);
+
+        db.Disconnect();
+    }
+
+    private static String AskUserName() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter your name: ");
-        String name = scanner.nextLine();
+        return scanner.nextLine();
+    }
+
+    private static void AddScore(DataBase db, String name, int scoreCount){
 
         // Create user
-        User user = new User(db);
+        User user = db.getUserList().Create();
         user.name = name;
-        user.Create();
+        user.Write();
 
         // Create score
-        Score score = new Score(db);
+        Score score = db.getScoreList().Create();
         score.user = user;
         score.date = new Date();
         score.scoreCount = scoreCount;
-        score.Create();
+        score.Write();
     }
 
     private static void ShowScoreRating(DataBase db) {
-        List<Score> list = ScoreList.getTop5List(db);
+        List<Score> list = db.getScoreList().getTop5List();
         SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 
         System.out.println("Top 5 scores list:");
@@ -119,10 +128,10 @@ public class SeaBattle {
             String scoreCount = String.valueOf(score.scoreCount);
             String date = df.format(score.date);
 
-            place = FormatString(place, 5);
-            name = FormatString(name, 15);
-            scoreCount = FormatString(scoreCount, 6);
-            date = FormatString(date, 10);
+            place = Tools.FormatString(place, 5);
+            name = Tools.FormatString(name, 15);
+            scoreCount = Tools.FormatString(scoreCount, 6);
+            date = Tools.FormatString(date, 10);
 
             System.out.printf("| %s | %s | %s | %s |\n", place, name, scoreCount, date);
         }
@@ -130,14 +139,4 @@ public class SeaBattle {
         System.out.println(" -----------------------------------------------");
     }
 
-    private static String FormatString(String str, int length) {
-        String result;
-        result = str.substring(0, min(length, str.length()));
-
-        // Add padding
-        while(result.length()<length)
-            result += " ";
-
-        return result;
-    }
 }

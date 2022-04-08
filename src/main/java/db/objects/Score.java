@@ -46,56 +46,6 @@ public class Score extends DBObject implements DBObjectInterface {
 
     // SQL data manipulation
 
-    public void Create() {
-        if(CheckFillErrors()) {
-            Exception(String.format("Failed to create %s '%s'. Fill errors found.", OBJECT_NAME, getRepresentation()));
-            return;
-        }
-
-        String sql = "INSERT INTO scores(user_id, date, score) VALUES (?, ?, ?);";
-        try(PreparedStatement statement = db.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setLong(1, user.id);
-            statement.setDate(2, new java.sql.Date(date.getTime()));
-            statement.setInt(3, scoreCount);
-            statement.executeUpdate();
-
-            ResultSet rs = statement.getGeneratedKeys();
-            if(rs.next())
-                id = rs.getLong("id");
-            else
-                Exception("SQL insertion failed: Can't get new id.");
-        } catch (SQLException e) {
-            Exception(String.format("SQL insertion failed: %s", e.getMessage()));
-        }
-    }
-
-    public void Read(long id) {
-        if(id==0) {
-            Exception(String.format("Failed to delete %s '%s'. ID is empty.", OBJECT_NAME, getRepresentation()));
-            return;
-        }
-
-        String sql = "SELECT id, user_id, date, score FROM scores WHERE id=?";
-        try(PreparedStatement statement = db.getConnection().prepareStatement(sql)) {
-            statement.setLong(1, id);
-            ResultSet rs = statement.executeQuery();
-
-            if(rs.next()) {
-                this.id = rs.getLong("id");
-                this.date = new Date(rs.getDate("date").getTime());
-                this.scoreCount = rs.getInt("score");
-
-                this.user = new User(db);
-                this.user.Read((int) rs.getLong("user_id"));
-
-            } else {
-                Exception(String.format("SQL select failed: Can't find object with id=%s", id));
-            }
-        } catch (SQLException e) {
-            Exception(String.format("SQL select failed: %s", e.getMessage()));
-        }
-    }
-
     public void Write() {
         if(id==0) {
             Exception(String.format("Failed to delete %s '%s'. ID is empty.", OBJECT_NAME, getRepresentation()));
@@ -132,6 +82,7 @@ public class Score extends DBObject implements DBObjectInterface {
             Exception(String.format("SQL deleting failed: %s", e.getMessage()));
         }
     }
+
 }
 
 

@@ -11,17 +11,6 @@ public class DBObject {
         this.db = dataBase;
     }
 
-    protected boolean CheckFillId() {
-        boolean result = true;
-
-        if(id==0) {
-            Exception("Fill errors found:");
-            Exception("   'Id' is empty.");
-            result = false;
-        }
-        return result;
-    }
-
     protected void PrintErrorList(String header, List<String> errors) {
         if(errors.isEmpty())
             return;
