@@ -15,8 +15,6 @@ import java.util.List;
 
 public class Score extends DBObject implements DBObjectInterface {
 
-    private final String OBJECT_NAME = "Score";
-
     public User user;
     public Date date;
     public int scoreCount;
@@ -47,15 +45,37 @@ public class Score extends DBObject implements DBObjectInterface {
     // SQL data manipulation
 
     public void Write() {
-        if(id==0) {
-            Exception(String.format("Failed to delete %s '%s'. ID is empty.", OBJECT_NAME, getRepresentation()));
-            return;
-        }
         if(CheckFillErrors()) {
-            Exception(String.format("Failed to write %s '%s'. Fill errors found.", OBJECT_NAME, getRepresentation()));
+            Exception(String.format("Failed to write score '%s'. Fill errors found.", getRepresentation()));
             return;
         }
 
+        if(isEmpty())
+            Create();
+        else
+            Save();
+    }
+
+    private void Create() {
+        String sql = "INSERT INTO scores(user_id, date, score) VALUES (?,?,?);";
+        try(PreparedStatement statement = db.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setLong(1, user.id);
+            statement.setDate(2, new java.sql.Date(date.getTime()));
+            statement.setInt(3, scoreCount);
+            statement.executeUpdate();
+
+            ResultSet rs = statement.getGeneratedKeys();
+            if(rs.next())
+                id = rs.getLong("id");
+            else
+                Exception("SQL insertion failed: Can't get new id.");
+
+        } catch (SQLException e) {
+            Exception(String.format("SQL insertion failed: %s", e.getMessage()));
+        }
+    }
+
+    private void Save() {
         String sql = "UPDATE scores SET user_id=?, date=?, score=? WHERE id=?";
         try(PreparedStatement statement = db.getConnection().prepareStatement(sql)) {
             statement.setLong(1, user.id);
@@ -70,7 +90,7 @@ public class Score extends DBObject implements DBObjectInterface {
 
     public void Delete() {
         if(id==0) {
-            Exception(String.format("Failed to delete %s '%s'. ID is empty.", OBJECT_NAME, getRepresentation()));
+            Exception(String.format("Failed to delete score '%s'. ID is empty.", getRepresentation()));
             return;
         }
 

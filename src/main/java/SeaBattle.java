@@ -101,10 +101,14 @@ public class SeaBattle {
 
     private static void AddScore(DataBase db, String name, int scoreCount){
 
-        // Create user
-        User user = db.getUserList().Create();
-        user.name = name;
-        user.Write();
+        // Find by name firstly
+        User user = db.getUserList().FindByName(name);
+        if(user.isEmpty()) {
+            // Create user
+            user = db.getUserList().Create();
+            user.name = name;
+            user.Write();
+        }
 
         // Create score
         Score score = db.getScoreList().Create();
