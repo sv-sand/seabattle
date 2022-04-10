@@ -1,5 +1,10 @@
+/*
+ * @author  Sand, sve.snd@gmail.com, http://sanddev.ru
+ * @project SeaBattle
+ * @created 08.04.2022
+ */
+
 import db.objects.Score;
-import db.objects.ScoreList;
 import game.BattleField;
 import game.Cell;
 import game.Ship;
@@ -10,8 +15,6 @@ import tools.Tools;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static java.lang.Math.min;
-
 public class SeaBattle {
 
     public static void main(String[] args) {
@@ -20,8 +23,7 @@ public class SeaBattle {
         System.out.println("For exit write 'exit'");
         System.out.println("To see the map write 'map'");
 
-        game.BattleField battleField;
-        battleField = new game.BattleField(9, 9);
+        BattleField battleField = new BattleField(9, 9);
         battleField.setShips(5, 5);
 
         startGame(battleField);
@@ -81,7 +83,7 @@ public class SeaBattle {
         scanner.nextLine();
     }
 
-    private static void AddNewScore(BattleField battleField) {
+    public static void AddNewScore(BattleField battleField) {
         DataBase db = new DataBase();
         db.Connect();
 
@@ -99,7 +101,7 @@ public class SeaBattle {
         return scanner.nextLine();
     }
 
-    private static void AddScore(DataBase db, String name, int scoreCount){
+    public static void AddScore(DataBase db, String name, int scoreCount){
 
         // Find by name firstly
         User user = db.getUserList().FindByName(name);
@@ -118,7 +120,7 @@ public class SeaBattle {
         score.Write();
     }
 
-    private static void ShowScoreRating(DataBase db) {
+    public static void ShowScoreRating(DataBase db) {
         List<Score> list = db.getScoreList().getTop5List();
         SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 

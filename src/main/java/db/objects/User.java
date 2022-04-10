@@ -1,7 +1,12 @@
+/*
+ * @author  Sand, sve.snd@gmail.com, http://sanddev.ru
+ * @project SeaBattle
+ * @created 08.04.2022
+ */
+
 package db.objects;
 
 import db.DataBase;
-import db.DBObjectInterface;
 import db.DBObject;
 
 import java.sql.PreparedStatement;
@@ -11,13 +16,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class User extends DBObject implements DBObjectInterface {
+public class User extends DBObject{
 
     public String name="";
 
     public User(DataBase db) {
         super(db);
     }
+
+    // Methods
 
     public String getRepresentation() {
         return name;

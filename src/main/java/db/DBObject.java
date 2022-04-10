@@ -1,8 +1,14 @@
+/*
+ * @author  Sand, sve.snd@gmail.com, http://sanddev.ru
+ * @project SeaBattle
+ * @created 08.04.2022
+ */
+
 package db;
 
 import java.util.List;
 
-public class DBObject {
+public abstract class DBObject {
     protected final DataBase db;
     public long id;
 
@@ -28,6 +34,14 @@ public class DBObject {
     protected void Exception(String message) {
         System.out.println(message);
     }
+
+    // Implementation in child class
+    public abstract String getRepresentation();
+    public abstract boolean CheckFillErrors();
+
+    // SQL data manipulation
+    public abstract void Write();
+    public abstract void Delete();
 
 }
 

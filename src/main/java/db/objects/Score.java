@@ -1,8 +1,12 @@
+/*
+ * @author  Sand, sve.snd@gmail.com, http://sanddev.ru
+ * @project SeaBattle
+ * @created 08.04.2022
+ */
+
 package db.objects;
 
-import db.DBObjectList;
 import db.DataBase;
-import db.DBObjectInterface;
 import db.DBObject;
 
 import java.sql.PreparedStatement;
@@ -13,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Score extends DBObject implements DBObjectInterface {
+public class Score extends DBObject {
 
     public User user;
     public Date date;

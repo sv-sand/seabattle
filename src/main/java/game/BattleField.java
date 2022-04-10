@@ -1,3 +1,9 @@
+/*
+ * @author  Sand, sve.snd@gmail.com, http://sanddev.ru
+ * @project SeaBattle
+ * @created 08.04.2022
+ */
+
 package game;
 
 import tools.Rand;
@@ -32,14 +38,14 @@ public class BattleField {
 
         // Print X-axis
         System.out.print("  ");
-        for (int x = 0; x < height; x++)
+        for (int x = 0; x < width; x++)
             System.out.printf(" %s ", Cell.getLetter(x));
 
         System.out.print("\n");
 
         // Print filler
         System.out.print("  ");
-        for (int x = 0; x < height; x++)
+        for (int x = 0; x < width; x++)
             System.out.print("---");
 
         System.out.print("\n");
@@ -73,7 +79,7 @@ public class BattleField {
 
         // Print filler
         System.out.print("  ");
-        for (int x = 0; x < height; x++)
+        for (int x = 0; x < width; x++)
             System.out.print("---");
 
         System.out.print("\n");

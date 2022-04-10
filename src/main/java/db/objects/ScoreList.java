@@ -1,3 +1,9 @@
+/*
+ * @author  Sand, sve.snd@gmail.com, http://sanddev.ru
+ * @project SeaBattle
+ * @created 08.04.2022
+ */
+
 package db.objects;
 
 import db.DBObjectList;
@@ -65,5 +71,19 @@ public class ScoreList extends DBObjectList {
             Exception(String.format("SQL list select failed: %s", e.getMessage()));
         }
         return list;
+    }
+
+    public void DeleteScoreOfUser(User user) {
+        String sql = "SELECT id FROM scores WHERE user_id=?";
+        try(PreparedStatement statement = db.getConnection().prepareStatement(sql)) {
+            statement.setLong(1, user.id);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()) {
+                Score score = db.getScoreList().FindById(rs.getLong("id"));
+                score.Delete();
+            }
+        } catch (SQLException e) {
+            Exception(String.format("SQL delete scores of user failed: %s", e.getMessage()));
+        }
     }
 }
