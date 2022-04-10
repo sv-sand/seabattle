@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 
 public class DataBaseImpl {
     private final int VERSION = 1;
-    private final String DB_DRIVER_NAME = "org.h2.Driver";
     private final String DB_URL = "jdbc:h2:";
     private final String DB_FOLDER = "./db/";
     private final String DB_FILE_NAME = "db";
@@ -28,6 +27,7 @@ public class DataBaseImpl {
     }
 
     public DataBaseImpl() {
+        String DB_DRIVER_NAME = "org.h2.Driver";
         try {
             Class.forName(DB_DRIVER_NAME);
             status = Status.READY;
@@ -108,9 +108,9 @@ public class DataBaseImpl {
 
         try(Statement statement = connection.createStatement()) {
             ResultSet rs = statement.executeQuery(query);
-            while (rs.next()) {
-                return rs.getInt("version");
-            }
+            rs.next();
+            return rs.getInt("version");
+
         } catch (SQLException e) {
             Exception(String.format("Query failed: %s", e.getMessage()));
         }

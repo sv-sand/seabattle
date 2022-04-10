@@ -11,8 +11,8 @@ import db.objects.UserList;
 
 public class DataBase extends DataBaseImpl{
 
-    private UserList userList = new UserList(this);
-    private ScoreList scoreList = new ScoreList(this);
+    private final UserList userList = new UserList(this);
+    private final ScoreList scoreList = new ScoreList(this);
 
     // Getters & setters
 

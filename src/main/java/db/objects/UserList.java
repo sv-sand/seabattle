@@ -22,8 +22,7 @@ public class UserList  extends DBObjectList {
     }
 
     public User Create() {
-        User object = new User(db);
-        return object;
+        return new User(db);
     }
 
     public User FindById(long id) {

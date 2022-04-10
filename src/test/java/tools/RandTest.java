@@ -18,7 +18,10 @@ class RandTest {
         assertEquals(5, Rand.getInt(5,5));
 
         for(int counter=1; counter<100; counter++)
-            getIntTest(2, 5);
+            getIntTest(0, 5);
+
+        for(int counter=1; counter<100; counter++)
+            getIntTest(2, 6);
     }
 
     void getIntTest(int min, int max) {

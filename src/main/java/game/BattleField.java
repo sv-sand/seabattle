@@ -145,8 +145,7 @@ public class BattleField {
 
         // Select set of cells
         Cell[] cells = new Cell[size];
-        for(int cellNumber=0; cellNumber<size; cellNumber++)
-            cells[cellNumber] = field[x][y+cellNumber];
+        System.arraycopy(field[x],0, cells,0, size);
 
         // Check of empty cells
         for(Cell cell:cells)

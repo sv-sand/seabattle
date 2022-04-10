@@ -25,8 +25,7 @@ public class ScoreList extends DBObjectList {
     }
 
     public Score Create() {
-        Score object = new Score(db);
-        return object;
+        return new Score(db);
     }
 
     public Score FindById(long id) {
