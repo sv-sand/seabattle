@@ -1,4 +1,4 @@
-/*
+/**
  * @author  Sand, sve.snd@gmail.com, http://sanddev.ru
  * @project SeaBattle
  * @created 08.04.2022

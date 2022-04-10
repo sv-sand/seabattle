@@ -1,8 +1,8 @@
-/*
+/**
  * @author  Sand, sve.snd@gmail.com, http://sanddev.ru
- * @project SeaBattle
+ * @project SeaBattle,
  * @created 08.04.2022
- */
+*/
 
 package db;
 
