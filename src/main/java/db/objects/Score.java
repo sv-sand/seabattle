@@ -29,10 +29,12 @@ public class Score extends DBObject {
 
     // Methods
 
+    @Override
     public String getRepresentation() {
         return "";
     }
 
+    @Override
     public boolean CheckFillErrors() {
         List<String> errors = new ArrayList<>();
 
@@ -48,6 +50,7 @@ public class Score extends DBObject {
 
     // SQL data manipulation
 
+    @Override
     public void Write() {
         if(CheckFillErrors()) {
             Exception(String.format("Failed to write score '%s'. Fill errors found.", getRepresentation()));
@@ -92,6 +95,7 @@ public class Score extends DBObject {
         }
     }
 
+    @Override
     public void Delete() {
         if(id==0) {
             Exception(String.format("Failed to delete score '%s'. ID is empty.", getRepresentation()));

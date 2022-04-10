@@ -12,7 +12,6 @@ import db.DataBase;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class UserList  extends DBObjectList {
     public DataBase db;
